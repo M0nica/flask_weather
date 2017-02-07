@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Local Weather For {{ location.city }}</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/weather-icons-wind.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/weather-icons-wind.min.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/weather.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/weather-icons.min.css') }}">
+
+  </head>
+  <body>
+      <h1>Today's Weather Forecast for {{ location.city }}, {{ location.state }}</h1>
+      
+
+ {% if weather_icon == "clear-day" %}
+   <i class="wi wi-day-sunny"></i>
+{% elif weather_icon == "clear-night"%}
+   <i class="wi wi-night-clear"></i>
+{% elif weather_icon == "rain"%}
+    <i class="wi wi-rain"></i>
+{% elif weather_icon == "snow"%}
+    <i class="wi wi-snow"></i>
+{% elif weather_icon == "sleet"%}
+    <i class="wi wi-sleet"></i>
+{% elif weather_icon == "wind"%}
+    <i class="wi wi-wind"></i>
+{% elif weather_icon == "fog"%}
+    <i class="wi wi-fog"></i>
+{% elif weather_icon == "cloudy"%}
+    <i class="wi wi-cloudy"></i>
+{% elif weather_icon == "partly-cloudy-day"%}
+    <i class="wi wi-forecast-io-partly-cloudy-day"></i>
+{% elif weather_icon == "partly-cloudy-day"%}
+    <i class="wi wi-forecast-io-partly-cloudy-day"></i>
+{% else %}
+    <i class="wi wi-day-sunny"></i>
+
+ {% endif %}
+
+<p>
+
+Right now it is {{ weather_info.temperature }}&deg; and there  is a {{ weather_info.rain}}
+<!-- wi-forecast-io-hail: hail
+wi-forecast-io-thunderstorm: thunderstorm
+wi-forecast-io-tornado: tornado -->
+
+    </p>
+
+
+  </body>
+</html>

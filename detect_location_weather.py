@@ -38,11 +38,17 @@ def weather(ip_coordinates, city, state):
     # format for weather api request = https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + ip_coordinates)
     data = response.json()
-
+    # data['hourly'] contains hourly data with the time formatted as Epoch Unix Time - should look into how to display hourly data in weather.html
+    # data['hourly']
+    weather_icon = str(data['currently']['icon'])
     temperature = str(int(data['currently']['temperature']))
     RAIN_WARNING = str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
     #print out a statement with the current weather info + location that was used/detected
-    return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
+    #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
+    location = {'city': city, 'state': state}
+    weather_info = {'temperature' : temperature, 'rain' : RAIN_WARNING}
+    return render_template('weather.html',
+                           location=location, weather_info=weather_info, weather_icon=weather_icon)
 if __name__ == '__main__':
     app.run()
