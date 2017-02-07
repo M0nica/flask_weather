@@ -9,7 +9,8 @@ Uses ipgetter to get a user's IP address and then used http://freegeoip.net to g
 
 `weather.html` displays the weather information and displays appropriate weather icon (https://erikflowers.github.io/weather-icons/) based on what the current weather is.
 
-Sample Output:
+##Sample Output:
+
 ### Today's Weather Forecast for Brooklyn, New York
 Right now it is 41° and there is a 0% chance of rain.
 
