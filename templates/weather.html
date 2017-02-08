@@ -6,11 +6,15 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/weather.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/weather-icons.min.css') }}">
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+      <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/styles.css') }}">
+
   </head>
   <body>
-      <h1>Today's Weather Forecast for {{ location.city }}, {{ location.state }}</h1>
-      
+      <h1>{{ location.city }}, {{ location.state }}</h1>
+        <h2>Today's Weather Forecast </h2>
 
+<span class="weather-icon">
  {% if weather_icon == "clear-day" %}
    <i class="wi wi-day-sunny"></i>
 {% elif weather_icon == "clear-night"%}
@@ -36,14 +40,18 @@
 
  {% endif %}
 
+ {{ weather_info.temperature }}&deg;
+</span>
 <p>
 
-Right now it is {{ weather_info.temperature }}&deg; and there  is a {{ weather_info.rain}}
+Right now it is {{ weather_info.temperature }}&deg; and {{ weather_info.rain}}
 <!-- wi-forecast-io-hail: hail
 wi-forecast-io-thunderstorm: thunderstorm
 wi-forecast-io-tornado: tornado -->
 
     </p>
+
+    <footer>Made by: Monica Powell | <a href="https://github.com/M0nica/flask_weather">View on GitHub</a> </footer>
 
 
   </body>

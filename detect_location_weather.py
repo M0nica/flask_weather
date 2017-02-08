@@ -42,12 +42,24 @@ def weather(ip_coordinates, city, state):
     # data['hourly']
     weather_icon = str(data['currently']['icon'])
     temperature = str(int(data['currently']['temperature']))
-    RAIN_WARNING = str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
+    RAIN_WARNING = data['daily']['data'][0]['precipProbability']
+
+    if RAIN_WARNING == 0:
+        rain_commentary = "there is a no chance of rain! It's a sunny day"
+    elif 0 < RAIN_WARNING <= .5:
+        rain_commentary = "there is a slight chance of rain. You might want to grab an umbrella"
+    elif  .5 < RAIN_WARNING <.75:
+        rain_commentary = "there is a high chance of rain. Grab an umbrella on your way out!"
+    elif  RAIN_WARNING == 1:
+        rain_commentary = "it is raining right now!"
+    else:
+        rain_commentary = "it is definitely going to rain today! GRAB YOUR UMBRELLA."
+    # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
     #print out a statement with the current weather info + location that was used/detected
     #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
-    weather_info = {'temperature' : temperature, 'rain' : RAIN_WARNING}
+    weather_info = {'temperature' : temperature, 'rain' : rain_commentary}
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 if __name__ == '__main__':

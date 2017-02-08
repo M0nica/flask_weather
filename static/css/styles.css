@@ -1,0 +1,12 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: aqua;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  padding-top: 5em;
+}
+
+span.weather-icon {
+    font-size: 4em;
+}
