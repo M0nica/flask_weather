@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, from urllib2 import urlopen, redirect, url_for
 from geoip import geolite2
 from geoip import open_database
 import urllib.request as ur
