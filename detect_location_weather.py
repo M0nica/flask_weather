@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for
+from socket import gethostname, gethostbyname
 from urllib2 import urlopen
 from geoip import geolite2
 from geoip import open_database
@@ -15,7 +16,8 @@ app = Flask(__name__)
 def location():
 
     # get the user's IP address
-    user_ip = ipgetter.myip()
+    user_ip = gethostbyname(gethostname())
+    #user_ip = ipgetter.myip()
     print(user_ip)
 
     # get location information based off of IP address
