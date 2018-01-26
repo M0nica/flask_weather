@@ -2,6 +2,10 @@
 
 Flask app to auto-detect local weather (temperature and chance of rain) based off of user's IP address.
 
+<img src="https://raw.githubusercontent.com/M0nica/flask_weather/master/static/nyc_weather_screenshot.png">
+
+*Example screenshot of flask_weather application*
+
 ## Setup
 
 - Install dependencies
