@@ -21,10 +21,19 @@
 
   </head>
   <body>
-      <h1>{{ location.city }}, {{ location.state }}</h1>
-        <h2>Today's Weather Forecast </h2>
+
+    <div id="weather-card">
+
+      <h2>Today's Weather Forecast </h2>
+
+      <div class="weather-container">
+  <h1>{{ location.city }}, {{ location.state }}</h1>
 
 <span class="weather-icon">
+
+  <span class="weather-degrees">{{ weather_info.temperature }}&deg;</span>
+
+
  {% if weather_icon == "clear-day" %}
    <i class="wi wi-day-sunny"></i>
 {% elif weather_icon == "clear-night"%}
@@ -50,7 +59,9 @@
 
  {% endif %}
 
- {{ weather_info.temperature }}&deg;
+
+
+
 </span>
 <p>
 
@@ -60,6 +71,9 @@ wi-forecast-io-thunderstorm: thunderstorm
 wi-forecast-io-tornado: tornado -->
 
     </p>
+  </div>
+</div>
+<br>
 
     <footer>Made by: Monica Powell | <a href="https://github.com/M0nica/flask_weather">View on GitHub</a> </footer>
 
