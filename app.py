@@ -7,7 +7,6 @@ import urllib.request as ur
 import socket
 import requests
 import config
-import ipgetter
 
 app = Flask(__name__)
 
@@ -16,22 +15,31 @@ app = Flask(__name__)
 def location():
 
     # get the user's IP address
-    user_ip = ipgetter.myip()
-    #user_ip = gethostbyname(gethostname())
-    #user_ip = request.environ['REMOTE_ADDR']
+    user_ip = requests.get('http://ip.42.pl/raw').text
+
     print(user_ip)
 
     # get location information based off of IP address
-    url = 'http://freegeoip.net/json/'+user_ip
+    url = 'http://ip-api.com/json/#'+user_ip
     r = requests.get(url)
     js = r.json()
-    city = js['city']
-    state = js['region_name']
-    ip_coordinates = str(js['latitude']) + "," + str(js['longitude'])
+    status = js['status']
 
-    #pass the coordinates and city name to the route that gets weather info
-    return redirect(url_for('weather', ip_coordinates=ip_coordinates, city=city, state=state))
+    # if call is successful 
+    if status == 'success':
+        try:
+            city = js['city']
+            state = js['regionName']
+            ip_coordinates = str(js['lat']) + "," + str(js['lon'])
+
+            #pass the coordinates and city name to the route that gets weather info
+            return redirect(url_for('weather', ip_coordinates=ip_coordinates, city=city, state=state))
+        except KeyError:
+            return redirect(url_for('error_page'))
+    else:
+        return redirect(url_for('error_page'))
     # return "hah"
+
 @app.route('/weather/<ip_coordinates>/<city>/<state>')
 
 def weather(ip_coordinates, city, state):
@@ -66,5 +74,10 @@ def weather(ip_coordinates, city, state):
     weather_info = {'temperature' : temperature, 'rain' : rain_commentary}
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
+
+@app.route('/404')
+def error_page():
+    return render_template('404.html')
+
 if __name__ == '__main__':
     app.run()
