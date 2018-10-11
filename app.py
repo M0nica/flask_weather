@@ -4,19 +4,18 @@ from socket import gethostname, gethostbyname
 from geoip import geolite2
 from geoip import open_database
 import urllib.request as ur
+import urllib
 import socket
 import requests
 import config
-import ipgetter
 
 app = Flask(__name__)
 
 @app.route('/')
-
 def location():
 
-    # get the user's IP address
-    user_ip = ipgetter.myip()
+    # get the user's external IP address
+    user_ip = urllib.urlopen('http://ipecho.net/plain').read()
     #user_ip = gethostbyname(gethostname())
     #user_ip = request.environ['REMOTE_ADDR']
     print(user_ip)

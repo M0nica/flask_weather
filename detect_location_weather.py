@@ -7,7 +7,6 @@ import urllib.request as ur
 import socket
 import requests
 import config
-import ipgetter
 
 app = Flask(__name__)
 
@@ -15,10 +14,8 @@ app = Flask(__name__)
 
 def location():
 
-    # get the user's IP address
-    #user_ip = gethostbyname(gethostname())
+    # get the remote address of the client
     user_ip = request.environ['REMOTE_ADDR']
-    #user_ip = ipgetter.myip()
     print(user_ip)
 
     # get location information based off of IP address
