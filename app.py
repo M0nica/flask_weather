@@ -14,43 +14,23 @@ app = Flask(__name__)
 @app.route('/')
 def location():
 
+    data = get_ip_info()
 
-    # get the user's external IP address
-    user_ip = requests.get('http://ip.42.pl/raw').text
-
-
-    print(user_ip)
-
-    # get location information based off of IP address
-    url = 'http://ip-api.com/json/#'+user_ip
-    r = requests.get(url)
-    js = r.json()
-    status = js['status']
-
-    # if call is successful
-    if status == 'success':
-        try:
-            city = js['city']
-            state = js['regionName']
-            ip_coordinates = str(js['lat']) + "," + str(js['lon'])
-
-            #pass the coordinates and city name to the route that gets weather info
-            return redirect(url_for('weather', ip_coordinates=ip_coordinates, city=city, state=state))
-        except KeyError:
-            return redirect(url_for('error_page'))
+    if data['success']:
+        return redirect(url_for('weather', city=data['city'], state=data['state']))
     else:
         return redirect(url_for('error_page'))
-    # return "hah"
 
-@app.route('/weather/<ip_coordinates>/<city>/<state>')
-
-def weather(ip_coordinates, city, state):
+@app.route('/weather/<city>/<state>')
+def weather(city, state):
     weather_key = config.weather_key
     degree_sign= u'\N{DEGREE SIGN}'
 
+    data = get_ip_info()
+
     # request weather info from the weather API
     # format for weather api request = https://api.darksky.net/forecast/[key]/[latitude],[longitude]
-    response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + ip_coordinates)
+    response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + data['ip_coords'])
     data = response.json()
     # data['hourly'] contains hourly data with the time formatted as Epoch Unix Time - should look into how to display hourly data in weather.html
     # data['hourly']
@@ -80,6 +60,20 @@ def weather(ip_coordinates, city, state):
 @app.errorhandler(404)
 def error_page(error):
     return render_template('404.html'), 404
+
+
+# private non-route methods
+def get_ip_info():
+    ip = requests.get('http://ip.42.pl/raw').text
+    r = requests.get('http://ip-api.com/json/#' + ip)
+    js = r.json()
+
+    return {
+        'success': js['status'] == 'success',
+        'city': js['city'],
+        'state': js['regionName'],
+        'ip_coords': str(js['lat']) + ", " + str(js['lon'])
+    }
 
 if __name__ == '__main__':
     app.run()
