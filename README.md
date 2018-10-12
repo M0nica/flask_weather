@@ -14,6 +14,9 @@ This is a Flask (Python) application that auto-detects local weather based off o
   - Setup config.py with the line `weather_key = "###############";`. The weather_key is the API key received from registering at https://darksky.net/dev.
 - Run  
   - `python app.py` 
+  
+## Deployment
+- You can follow [this medium article](https://medium.com/the-andela-way/deploying-a-python-flask-app-to-heroku-41250bda27d0) to deploy it on heroku.
 
 ## Functionality
 
