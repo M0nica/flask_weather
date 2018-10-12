@@ -27,6 +27,8 @@ To work on this locally clone the repo, request and add an API key (locally) fro
 
 `weather.html` displays the weather information and displays appropriate weather icon (https://erikflowers.github.io/weather-icons/) based on what the current weather is.
 
+To display temperature in Celsius instead of Fahrenheit, use `celsius = True` in `config.py`
+
 ## Sample Output:
 
 ### Today's Weather Forecast for Brooklyn, New York
