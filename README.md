@@ -17,7 +17,9 @@ Flask app to auto-detect local weather (temperature and chance of rain) based of
 
 ## Functionality
 
-Get a user's IP address and then used http://ip-api.com/ to get more specific location information to pass into Weather API (https://darksky.net/dev/). Weather information (current temperature and % chance of rain) is returned based on the location associated with the IP.
+
+Gets a user's external IP address and then used http://freegeoip.net to get more specific location information to pass into Weather API (https://darksky.net/dev/). Weather information (current temperature and % chance of rain) is returned based on the location associated with the IP.
+
 
 To work on this locally clone the repo, request and add an API key (locally) from darksky and then run `app.py`
 

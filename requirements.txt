@@ -10,7 +10,6 @@ first==2.0.1
 Flask==0.12
 gunicorn==19.4.5
 html5lib==0.9999999
-ipgetter==0.6
 ipykernel==4.5.2
 ipython==5.2.2
 ipython-genutils==0.1.0

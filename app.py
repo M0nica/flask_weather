@@ -4,6 +4,7 @@ from socket import gethostname, gethostbyname
 from geoip import geolite2
 from geoip import open_database
 import urllib.request as ur
+import urllib
 import socket
 import requests
 import config
@@ -11,11 +12,12 @@ import config
 app = Flask(__name__)
 
 @app.route('/')
-
 def location():
 
-    # get the user's IP address
+
+    # get the user's external IP address
     user_ip = requests.get('http://ip.42.pl/raw').text
+
 
     print(user_ip)
 
