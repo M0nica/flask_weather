@@ -27,7 +27,7 @@ def location():
     js = r.json()
     status = js['status']
 
-    # if call is successful 
+    # if call is successful
     if status == 'success':
         try:
             city = js['city']
@@ -77,9 +77,9 @@ def weather(ip_coordinates, city, state):
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 
-@app.route('/404')
-def error_page():
-    return render_template('404.html')
+@app.errorhandler(404)
+def error_page(error):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run()
