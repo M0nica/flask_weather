@@ -1,0 +1,23 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #e7ecec;
+    color: #01082f;
+    width: 50%;
+    text-align: center;
+    padding-top: 5em;
+    margin: auto;
+}
+
+.error-card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: #b6ebef;
+    width: 60%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.retry {
+    margin-top: 15px;
+}
