@@ -1,7 +1,6 @@
-# flask_weather ☀️☔️
+# Flask Weather App ☀️☔️
 
-Flask app to auto-detect local weather based off of user's extneral IP address and make sure no one ends up in the rain without an umbrella!
-
+This is a Flask (Python) application that auto-detects local weather based off of user's external IP address.
 
 <img src="https://raw.githubusercontent.com/M0nica/flask_weather/master/static/nyc_weather_screenshot.png">
 
