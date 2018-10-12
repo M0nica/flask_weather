@@ -7,8 +7,8 @@ decorator==4.0.11
 Django==1.10.5
 entrypoints==0.2.2
 first==2.0.1
-Flask==0.12
-gunicorn==19.4.5
+Flask==0.12.3
+gunicorn==19.5.0
 html5lib==0.9999999
 ipykernel==4.5.2
 ipython==5.2.2
@@ -18,14 +18,14 @@ itsdangerous==0.24
 Jinja2==2.9.5
 jsonschema==2.6.0
 jupyter==1.0.0
-jupyter-client==4.4.0
+jupyter-client==5.2.0
 jupyter-console==5.1.0
-jupyter-core==4.2.1
+jupyter-core==4.4.0
 MarkupSafe==0.23
 mistune==0.7.3
 nbconvert==5.1.1
 nbformat==4.2.0
-notebook==4.3.2
+notebook==5.4.1
 packaging==16.8
 pandocfilters==1.4.1
 pexpect==4.2.1
@@ -43,7 +43,7 @@ requests==2.13.0
 simplegeneric==0.8.1
 six==1.10.0
 slacker==0.9.40
-terminado==0.6
+terminado==0.8.1
 testpath==0.3
 tornado==4.4.2
 traitlets==4.3.1
