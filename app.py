@@ -1,13 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, request
-from socket import gethostname, gethostbyname
-# from urllib2 import urlopen
-from geoip import geolite2
-from geoip import open_database
-import urllib.request as ur
-import urllib
-import socket
+from flask import Flask, render_template, redirect, url_for
 import requests
+
 import config
+
 
 app = Flask(__name__)
 
