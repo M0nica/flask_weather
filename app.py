@@ -38,9 +38,9 @@ def location():
             return redirect(url_for('weather', ip_coordinates=ip_coordinates, city=city, state=state))
         except KeyError:
             return redirect(url_for('error_page'))
+    # if call is unsuccessful
     else:
         return redirect(url_for('error_page'))
-    # return "hah"
 
 @app.route('/weather/<ip_coordinates>/<city>/<state>')
 
@@ -59,15 +59,15 @@ def weather(ip_coordinates, city, state):
     RAIN_WARNING = data['daily']['data'][0]['precipProbability']
 
     if RAIN_WARNING == 0:
-        rain_commentary = "there is a no chance of rain! It's a sunny day"
+        rain_commentary = "There is a no chance of rain! It's a sunny day."
     elif 0 < RAIN_WARNING <= .5:
-        rain_commentary = "there is a slight chance of rain. You might want to grab an umbrella ☔"
+        rain_commentary = "There is a slight chance of rain. You might want to grab an umbrella. ☔"
     elif  .5 < RAIN_WARNING <.75:
-        rain_commentary = "there is a high chance of rain. Grab an umbrella on your way out! ☔"
+        rain_commentary = "There is a high chance of rain. Grab an umbrella on your way out! ☔"
     elif  RAIN_WARNING == 1:
-        rain_commentary = "it is raining right now!"
+        rain_commentary = "It is raining right now!"
     else:
-        rain_commentary = "it is definitely going to rain today! GRAB YOUR UMBRELLA. ☔"
+        rain_commentary = "It is definitely going to rain today! GRAB YOUR UMBRELLA. ☔"
     # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
     #print out a statement with the current weather info + location that was used/detected
