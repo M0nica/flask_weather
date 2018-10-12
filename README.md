@@ -38,6 +38,6 @@ Right now it is X° and there is a Y% chance of rain.
 ## Deploy
 Here are some to begin with:
 
-*[How To Serve Flask Applications with Gunicorn and Nginx on Ubuntu 16.04 Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04)
+* [How To Serve Flask Applications with Gunicorn and Nginx on Ubuntu 16.04 Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04)
 
 
