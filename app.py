@@ -62,8 +62,9 @@ def weather(city, state):
 
     #print out a statement with the current weather info + location that was used/detected
     #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
+    celsius = True if hasattr(config, 'celsius') else False
     location = {'city': city, 'state': state}
-    weather_info = {'temperature' : temperature, 'rain' : rain_commentary, 'celsius'=config.celsius}
+    weather_info = {'temperature' : temperature, 'rain' : rain_commentary, 'celsius': celsius}
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 
