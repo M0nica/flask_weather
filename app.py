@@ -14,7 +14,7 @@ app.secret_key = config.secret_key
 
 @app.route('/')
 def location():
-    if (session['ip_info']):
+    if (session and session['ip_info']):
         data =  session['ip_info']
         return redirect(url_for('weather', city=data['city'], state=data['state']))
     else:
