@@ -1,0 +1,8 @@
+language: python
+python:
+  - "3.6.5"
+cache: pip
+install:
+  - pip install -r requirements.txt
+script:
+  - python flask_weather_tests.py
