@@ -7,15 +7,11 @@ import urllib.request as ur
 import urllib
 import socket
 import requests
-import config
 import os
 
 app = Flask(__name__)
 
-if (config and config.secret_key):
-    app.secret_key = config.secret_key
-else:
-    app.secret_key = os.environ['secret_key']
+app.secret_key = os.environ['secret_key']
 
 @app.route('/')
 def location():
@@ -40,10 +36,7 @@ def celsius():
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
  
-    if (config and config.weather_key):
-         weather_key = config.weather_key
-    else:
-        weather_key = os.environ['weather_key']
+    weather_key = os.environ['weather_key']
 
     degree_sign= u'\N{DEGREE SIGN}'
 

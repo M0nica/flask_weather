@@ -10,8 +10,9 @@ _Example screenshot of flask_weather application_
 
 - Install dependencies
 - `pip install -r requirements.txt`
-- Add `config.py`
-  - Setup config.py with the line `weather_key = "###############";`. The weather_key is the API key received from registering at https://darksky.net/dev.
+- Add environment variables
+  - `weather_key="###############";`. The weather_key is the API key received from registering at https://darksky.net/dev.
+  - add `secret_key="********"`. It should be a random string that is hard to guess.
 - Run
   - `python app.py`
 - Run Tests
@@ -25,7 +26,7 @@ To work on this locally clone the repo, request and add an API key (locally) fro
 
 `weather.html` displays the weather information and displays appropriate weather icon (https://erikflowers.github.io/weather-icons/) based on what the current weather is.
 
-To display temperature in Celsius instead of Fahrenheit, use `celsius = True` in `config.py`
+To display temperature in Celsius instead of Fahrenheit, set `celsius = True` environment variables.
 
 ## Sample Output:
 
