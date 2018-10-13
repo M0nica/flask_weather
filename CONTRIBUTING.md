@@ -1,8 +1,8 @@
 # How to contribute
 
-I like to encourage you to contribute to the repository.
+We'd like to encourage you to contribute to Flask Weather.
 
-This should be as easy as possible for you but there are a few things
+We want this to be as easy as possible for you but there are a few things
 to consider when contributing.  The following guidelines for
 contribution should be followed if you want to submit a pull request.
 
