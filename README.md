@@ -12,9 +12,10 @@ _Example screenshot of flask_weather application_
 - `pip install -r requirements.txt`
 - Add `config.py`
   - Setup config.py with the line `weather_key = "###############";`. The weather_key is the API key received from registering at https://darksky.net/dev.
-  - Also add `secret_key` and put in a random string
 - Run
   - `python app.py`
+- Run Tests
+  - `python flask_weather_tests.py`
 
 ## Functionality
 
