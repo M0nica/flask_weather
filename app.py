@@ -14,14 +14,16 @@ app.secret_key = config.secret_key
 
 @app.route('/')
 def location():
-
-    data = get_ip_info()
- 
-    if data['success']:
-        session['ip_info'] = data
+    if (session['ip_info']):
+        data =  session['ip_info']
         return redirect(url_for('weather', city=data['city'], state=data['state']))
     else:
-        return redirect(url_for('error_page'))
+        data = get_ip_info()
+        if data['success']:
+            session['ip_info'] = data
+            return redirect(url_for('weather', city=data['city'], state=data['state']))
+        else:
+            return redirect(url_for('error_page'))
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
