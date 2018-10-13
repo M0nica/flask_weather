@@ -46,7 +46,6 @@ def weather(city, state):
     response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + data['ip_coords']+ celsius())
     data = response.json()
     # data['hourly'] contains hourly data with the time formatted as Epoch Unix Time - should look into how to display hourly data in weather.html
-    # data['hourly']
     weather_icon = str(data['currently']['icon'])
     temperature = str(int(data['currently']['temperature']))
     RAIN_WARNING = data['daily']['data'][0]['precipProbability']
@@ -66,7 +65,7 @@ def weather(city, state):
     #print out a statement with the current weather info + location that was used/detected
     #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
-    weather_info = {'temperature' : temperature, 'rain' : rain_commentary}
+    weather_info = {'temperature' : temperature, 'rain' : rain_commentary, 'unit' : [True if len(celsius()) > 0 else False][0]}
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 
