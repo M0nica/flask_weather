@@ -26,8 +26,8 @@ def location():
 
 
 def celsius():
-    if hasattr(config, "celsius"):
-        if config.celsius:
+    if hasattr(os.environ,"celsius"):
+        if os.environ['celsius']:
             return "?units=si"
 
     return ""
