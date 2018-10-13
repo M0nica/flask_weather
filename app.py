@@ -50,7 +50,8 @@ def weather(city, state):
     weather_icon = str(data['currently']['icon'])
     temperature = str(int(data['currently']['temperature']))
     RAIN_WARNING = data['daily']['data'][0]['precipProbability']
-
+    
+    #Deciding Rain Commentary From Rain Warning
     if RAIN_WARNING == 0:
         rain_commentary = "there is a no chance of rain! It's a sunny day"
     elif 0 < RAIN_WARNING <= .5:
@@ -63,7 +64,7 @@ def weather(city, state):
         rain_commentary = "it is definitely going to rain today! GRAB YOUR UMBRELLA. ☔"
     # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
-    #print out a statement with the current weather info + location that was used/detected
+    #print out a statement with the current weather info + location that was used/detected.
     #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
     weather_info = {'temperature' : temperature, 'rain' : rain_commentary}

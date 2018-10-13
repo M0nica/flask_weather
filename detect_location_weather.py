@@ -45,7 +45,6 @@ def location():
 def weather(ip_coordinates, city, state):
     weather_key = config.weather_key
     degree_sign= u'\N{DEGREE SIGN}'
-
     # request weather info from the weather API
     # format for weather api request = https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + ip_coordinates)
@@ -72,6 +71,7 @@ def weather(ip_coordinates, city, state):
     #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
     weather_info = {'temperature' : temperature, 'rain' : rain_commentary}
+    print("Current Weather in"+location(city)+"."+"Temperature is"+weather+info(temperature)+rain_commentary)
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 
