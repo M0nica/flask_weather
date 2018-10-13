@@ -35,8 +35,7 @@ def celsius():
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
-
-    weather_key = config.weather_key
+    weather_key = os.environ['weather_key']
     # degree_sign = u'\N{DEGREE SIGN}'
 
     data = session['ip_info']
