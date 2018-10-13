@@ -1,10 +1,10 @@
 import requests
 from flask import Flask, session, render_template, redirect, url_for
-
-import config
+import os
 
 app = Flask(__name__)
-app.secret_key = config.secret_key
+
+app.secret_key = os.environ['secret_key']
 
 
 @app.route('/')
@@ -35,6 +35,7 @@ def celsius():
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
+
     weather_key = config.weather_key
     # degree_sign = u'\N{DEGREE SIGN}'
 
