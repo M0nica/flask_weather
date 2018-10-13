@@ -48,9 +48,11 @@ def weather(city, state):
         )
     )
     data = response.json()
+
     # data['hourly'] contains hourly data with the time formatted as Epoch
     # Unix Time - should look into how to display hourly data in weather.html
     # data['hourly']
+
     weather_icon = str(data['currently']['icon'])
     temperature = str(int(data['currently']['temperature']))
     RAIN_WARNING = data['daily']['data'][0]['precipProbability']
@@ -75,6 +77,7 @@ def weather(city, state):
     # return("Right now in "+ city + ", " + state + " it is " + temperature
     # + degree_sign + " and there is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
+
     weather_info = {'temperature': temperature, 'rain': rain_commentary}
     return render_template(
         'weather.html',
@@ -82,7 +85,6 @@ def weather(city, state):
         weather_info=weather_info,
         weather_icon=weather_icon
     )
-
 
 @app.errorhandler(404)
 def error_page(error):
