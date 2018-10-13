@@ -32,7 +32,14 @@
 
 <span class="weather-icon">
 
-  <span class="weather-degrees">{{ weather_info.temperature }}&deg;</span>
+  <span class="weather-degrees">
+    {{ weather_info.temperature }}
+    {% if weather_info.celsius %}
+    &#8451;
+    {% else %}
+    &#8457;
+    {% endif %}
+  </span>
 
 
  {% if weather_icon == "clear-day" %}
@@ -64,9 +71,15 @@
 
 
 </span>
-<p>
+    <p>
 
-Right now it is {{ weather_info.temperature }}&deg; and {{ weather_info.rain}}
+Right now it is {{ weather_info.temperature }}
+{% if weather_info.celsius %}
+&#8451;
+{% else %}
+&#8457;
+{% endif %}
+ and {{ weather_info.rain}}
 <!-- wi-forecast-io-hail: hail
 wi-forecast-io-thunderstorm: thunderstorm
 wi-forecast-io-tornado: tornado -->
