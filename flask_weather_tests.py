@@ -4,6 +4,7 @@ import app as fw
 
 import unittest
 
+
 class FlaskWeatherTestCase(unittest.TestCase):
 
     # runs before each test
@@ -19,6 +20,7 @@ class FlaskWeatherTestCase(unittest.TestCase):
     def test_invalid_route_returns_404_page(self):
         request = self.app.get('/doesnotexist')
         self.assertEqual(404, request.status_code)
+
 
 if __name__ == '__main__':
     unittest.main()

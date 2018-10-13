@@ -1,0 +1,5 @@
+flake8
+Flask
+gunicorn
+pip-tools
+requests
