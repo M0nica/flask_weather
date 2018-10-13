@@ -7,10 +7,11 @@ import urllib.request as ur
 import urllib
 import socket
 import requests
-import config
+import os
 
 app = Flask(__name__)
-app.secret_key = config.secret_key
+
+app.secret_key = os.environ['secret_key']
 
 @app.route('/')
 def location():
@@ -34,7 +35,9 @@ def celsius():
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
-    weather_key = config.weather_key
+ 
+    weather_key = os.environ['weather_key']
+
     degree_sign= u'\N{DEGREE SIGN}'
 
     data = session['ip_info']
