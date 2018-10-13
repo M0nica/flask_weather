@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, session, render_template, redirect, url_for, request
 from socket import gethostname, gethostbyname
 # from urllib2 import urlopen
 from geoip import geolite2
@@ -10,24 +10,27 @@ import requests
 import config
 
 app = Flask(__name__)
+app.secret_key = config.secret_key
 
 @app.route('/')
 def location():
-
-    data = get_ip_info()
-
-    if data['success']:
+    if (session['ip_info']):
+        data =  session['ip_info']
         return redirect(url_for('weather', city=data['city'], state=data['state']))
     else:
-        return redirect(url_for('error_page'))
+        data = get_ip_info()
+        if data['success']:
+            session['ip_info'] = data
+            return redirect(url_for('weather', city=data['city'], state=data['state']))
+        else:
+            return redirect(url_for('error_page'))
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
     weather_key = config.weather_key
     degree_sign= u'\N{DEGREE SIGN}'
 
-    data = get_ip_info()
-
+    data = session['ip_info']
     # request weather info from the weather API
     # format for weather api request = https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + data['ip_coords'])
