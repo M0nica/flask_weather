@@ -26,7 +26,7 @@ def location():
 
 
 def celsius():
-    if hasattr(os.environ,"celsius"):
+    if hasattr(os.environ, "celsius"):
         if os.environ['celsius']:
             return "?units=si"
 
@@ -85,6 +85,7 @@ def weather(city, state):
         weather_info=weather_info,
         weather_icon=weather_icon
     )
+
 
 @app.errorhandler(404)
 def error_page(error):
