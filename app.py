@@ -25,6 +25,13 @@ def location():
         else:
             return redirect(url_for('error_page'))
 
+def celsius():
+    if hasattr(config,"celsius"):
+        if config.celsius:
+            return "?units=si"
+    else:
+        return ""
+
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
     weather_key = config.weather_key
@@ -33,7 +40,7 @@ def weather(city, state):
     data = session['ip_info']
     # request weather info from the weather API
     # format for weather api request = https://api.darksky.net/forecast/[key]/[latitude],[longitude]
-    response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + data['ip_coords'])
+    response = requests.get('https://api.forecast.io/forecast/' + weather_key + '/' + data['ip_coords']+ celsius())
     data = response.json()
     # data['hourly'] contains hourly data with the time formatted as Epoch Unix Time - should look into how to display hourly data in weather.html
     # data['hourly']
@@ -77,6 +84,6 @@ def get_ip_info():
         'state': js['regionName'],
         'ip_coords': str(js['lat']) + ", " + str(js['lon'])
     }
-
+    
 if __name__ == '__main__':
     app.run()
