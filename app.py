@@ -7,11 +7,11 @@ import urllib.request as ur
 import urllib
 import socket
 import requests
-import config
 import os
 
 app = Flask(__name__)
-app.secret_key = config.secret_key or os.environ['secret_key']
+
+app.secret_key = os.environ['secret_key']
 
 @app.route('/')
 def location():
@@ -27,15 +27,17 @@ def location():
             return redirect(url_for('error_page'))
 
 def celsius():
-    if hasattr(config,"celsius"):
-        if config.celsius:
+    if hasattr(os.environ,"celsius"):
+        if os.environ['celsius']:
             return "?units=si"
     else:
         return ""
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
-    weather_key = config.weather_key or os.environ['secret_key']
+ 
+    weather_key = os.environ['weather_key']
+
     degree_sign= u'\N{DEGREE SIGN}'
 
     data = session['ip_info']
