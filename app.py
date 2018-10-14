@@ -1,4 +1,4 @@
-from flask import Flask, session, render_template, redirect, url_for, request
+from flask import Flask, session, render_template, redirect, url_for
 from socket import gethostname, gethostbyname
 # from urllib2 import urlopen
 from geoip import geolite2
@@ -77,11 +77,7 @@ def error_page(error):
 
 # private non-route methods
 def get_ip_info():
-    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
-      ip = request.environ['REMOTE_ADDR']
-    else:
-      ip = request.environ['HTTP_X_FORWARDED_FOR']
-
+    ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     r = requests.get('http://ip-api.com/json/#' + ip)
     js = r.json()
 
