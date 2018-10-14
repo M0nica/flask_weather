@@ -54,19 +54,29 @@ def weather(city, state):
     # data['hourly']
 
     weather_icon = str(data['currently']['icon'])
-    temperature = str(int(data['currently']['temperature']))
+    temperature = int(data['currently']['temperature'])
     RAIN_WARNING = data['daily']['data'][0]['precipProbability']
+    rain_commentary = ""
 
-    if RAIN_WARNING == 0:
-        rain_commentary = "there is a no chance of rain! It's a sunny day"
-    elif 0 < RAIN_WARNING <= .5:
+    if temperature <= 50:
+        commentary = "It's really cold outside today. You might need that scarf."
+    elif 50 < temperature <= 59:
+        commentary = "It's cold but not too bad."
+    elif 59 < temperature <= 68:
+        commentary = "It's a beautiful day, go out."
+    elif 68 < temperature <= 77:
+        commentary = "It's a bit warm, and Don't forget those sunglasses."
+    elif 77 < temperature <= 89.6:
+        commentary = "Too hot, keep hydrating yourself."
+    else:
+        commentary = "Stay indoors, it's too hot outside"
+
+    if 0 < RAIN_WARNING <= .5:
         rain_commentary = "there is a slight chance of rain. " \
                           "You might want to grab an umbrella ☔"
     elif .5 < RAIN_WARNING < .75:
         rain_commentary = "there is a high chance of rain. " \
                           "Grab an umbrella on your way out! ☔"
-    elif RAIN_WARNING == 1:
-        rain_commentary = "it is raining right now!"
     else:
         rain_commentary = "it is definitely going to rain today! " \
                           "GRAB YOUR UMBRELLA. ☔"
@@ -78,7 +88,12 @@ def weather(city, state):
     # + degree_sign + " and there is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
 
-    weather_info = {'temperature': temperature, 'rain': rain_commentary}
+    temperature = str(temperature)
+    if not rain_commentary:
+        weather_info = {'temperature': temperature, 'commentary': rain_commentary}
+    else:
+        weather_info = {'temperature': temperature, 'commentary': commentary}
+    
     return render_template(
         'weather.html',
         location=location,

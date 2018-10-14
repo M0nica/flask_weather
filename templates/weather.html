@@ -111,9 +111,8 @@
             </span>
             <p>
 
-                <!-- Right now it is {{ weather_info.temperature }}&deg; and {{ weather_info.rain}} -->
-                Right now it is {{ weather_info.temperature }} {% if weather_info.unit == True %} &#8451; {% else %} &#8457; {% endif %}
-                and {{ weather_info.rain}}
+                <!-- Right now it is {{ weather_info.temperature }}&deg; and {{ weather_info.commentary}} -->
+                {{ weather_info.commentary}}
                 <!-- wi-forecast-io-hail: hail
     wi-forecast-io-thunderstorm: thunderstorm
     wi-forecast-io-tornado: tornado -->
