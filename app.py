@@ -29,7 +29,7 @@ def location():
 
 
 def celsius():
-    if hasattr(os.environ,"celsius"):
+    if hasattr(os.environ, "celsius"):
         if os.environ['celsius']:
             return "?units=si"
 
