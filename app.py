@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, session, render_template, redirect, url_for
+from flask import Flask, session, render_template, redirect, url_for, request
 import os
 
 app = Flask(__name__)
@@ -9,20 +9,21 @@ app.secret_key = os.environ['secret_key']
 
 @app.route('/')
 def location():
-    if (session and session['ip_info']):
-        data = session['ip_info']
+    if 'X-Forwarded-For' in request.headers:
+        user_ip = str(request.headers['X-Forwarded-For'])
+    else:
+        user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+
+    # get location information based off of IP address
+    url = 'http://ip-api.com/json/' + user_ip
+    response = requests.get(url)
+    json_response = response.json()
+    if (json_response['status'] == 'success'):
         return redirect(
-            url_for('weather', city=data['city'], state=data['state'])
+            url_for('weather', city=json_response['city'], state=json_response['regionName'])
         )
     else:
-        data = get_ip_info()
-        if data['success']:
-            session['ip_info'] = data
-            return redirect(
-                url_for('weather', city=data['city'], state=data['state'])
-            )
-        else:
-            return redirect(url_for('error_page'))
+        return redirect(url_for('error_page'))
 
 
 def celsius():
@@ -38,13 +39,21 @@ def weather(city, state):
     weather_key = os.environ['weather_key']
     # degree_sign = u'\N{DEGREE SIGN}'
 
-    data = session['ip_info']
-    # request weather info from the weather API
-    # format for weather api request =
-    # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
+    if 'X-Forwarded-For' in request.headers:
+        user_ip = str(request.headers['X-Forwarded-For'])
+    else:
+        user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+
+    # get location information based off of IP address
+    url = 'http://ip-api.com/json/' + user_ip
+    response = requests.get(url)
+    json_response = response.json()
+
+    coordinates = str(json_response['lat']) + ',' + str(json_response['lon'])
+
     response = requests.get(
         'https://api.forecast.io/forecast/%s/%s%s' % (
-            weather_key, data['ip_coords'], celsius()
+            weather_key, coordinates, celsius()
         )
     )
     data = response.json()
