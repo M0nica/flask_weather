@@ -21,7 +21,7 @@ def location():
         user_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
     # get location information based off of IP address
-    url = 'http://ip-api.com/json/'+'13.110.197.229'
+    url = 'http://ip-api.com/json/' + user_ip
     r = requests.get(url)
     js = r.json()
     status = js['status']
