@@ -8,6 +8,8 @@ import urllib
 import socket
 import requests
 import os
+from mod_python import apache
+
 
 app = Flask(__name__)
 
@@ -77,7 +79,11 @@ def error_page(error):
 
 # private non-route methods
 def get_ip_info():
-    ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+      ip = request.environ['REMOTE_ADDR']
+    else:
+      ip = request.environ['HTTP_X_FORWARDED_FOR']
+
     r = requests.get('http://ip-api.com/json/#' + ip)
     js = r.json()
 
