@@ -8,15 +8,20 @@ _Example screenshot of flask_weather application_
 
 ## Setup
 
-- Install dependencies
+- Install dependencies (for the React application you will need NodeJS and yarn)
 - `pip install -r requirements.txt`
+- `yarn install`
 - Add environment variables
   - `weather_key="###############";`. The weather_key is the API key received from registering at https://darksky.net/dev.
   - add `secret_key="********"`. It should be a random string that is hard to guess.
+- Build React app
+  - `yarn build`
 - Run
   - `python app.py`
 - Run Tests
   - `python flask_weather_tests.py`
+
+App is accessible on http://localhost:5000
 
 ## Functionality
 

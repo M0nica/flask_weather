@@ -1,28 +1,31 @@
+# coding=utf-8
 import requests
-from flask import Flask, session, render_template, redirect, url_for
+import json
+from flask import Flask, session, render_template, redirect, url_for, send_from_directory
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./build")
 
 app.secret_key = os.environ['secret_key']
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists("./build/" + path):
+        return send_from_directory('./build', path)
+    else:
+        return send_from_directory('./build', 'index.html')
 
-@app.route('/')
+@app.route('/getLocationByIP', methods=['GET'])
 def location():
     if (session and session['ip_info']):
         data = session['ip_info']
-        return redirect(
-            url_for('weather', city=data['city'], state=data['state'])
-        )
+        return json.dumps(data)
     else:
         data = get_ip_info()
-        if data['success']:
-            session['ip_info'] = data
-            return redirect(
-                url_for('weather', city=data['city'], state=data['state'])
-            )
-        else:
-            return redirect(url_for('error_page'))
+        session['ip_info'] = data
+
+        return json.dumps(data)
 
 
 def celsius():
@@ -33,18 +36,17 @@ def celsius():
     return ""
 
 
-@app.route('/weather/<city>/<state>')
-def weather(city, state):
+@app.route('/weather/<ip>')
+def weather(ip):
     weather_key = os.environ['weather_key']
     # degree_sign = u'\N{DEGREE SIGN}'
 
-    data = session['ip_info']
     # request weather info from the weather API
     # format for weather api request =
     # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get(
         'https://api.forecast.io/forecast/%s/%s%s' % (
-            weather_key, data['ip_coords'], celsius()
+            weather_key, ip, celsius()
         )
     )
     data = response.json()
@@ -72,19 +74,9 @@ def weather(city, state):
                           "GRAB YOUR UMBRELLA. ☔"
     # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
-    # print out a statement with the current weather info + location that was
-    # used/detected
-    # return("Right now in "+ city + ", " + state + " it is " + temperature
-    # + degree_sign + " and there is a " + RAIN_WARNING)
-    location = {'city': city, 'state': state}
 
-    weather_info = {'temperature': temperature, 'rain': rain_commentary}
-    return render_template(
-        'weather.html',
-        location=location,
-        weather_info=weather_info,
-        weather_icon=weather_icon
-    )
+    weather_info = {'temperature': temperature, 'rainCommentary': rain_commentary, "icon": weather_icon, "hasCelsius": celsius() }
+    return json.dumps(weather_info)
 
 @app.errorhandler(404)
 def error_page(error):
