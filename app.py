@@ -77,7 +77,11 @@ def error_page(error):
 
 # private non-route methods
 def get_ip_info():
-    ip = requests.get('http://ip.42.pl/raw').text
+    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+      ip = request.environ['REMOTE_ADDR']
+    else:
+      ip = request.environ['HTTP_X_FORWARDED_FOR']
+
     r = requests.get('http://ip-api.com/json/#' + ip)
     js = r.json()
 
