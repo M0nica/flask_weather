@@ -86,7 +86,6 @@ def weather(city, state):
         weather_icon=weather_icon
     )
 
-
 @app.errorhandler(404)
 def error_page(error):
     return render_template('404.html'), 404
