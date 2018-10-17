@@ -11,17 +11,18 @@ app.secret_key = os.environ['secret_key']
 @app.route('/')
 def location():
     if (session and session['ip_info']):
-        if 'X-Forwarded-For' in request.headers:
-            user_ip = str(request.headers['X-Forwarded-For'])
-        else:
-            user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+        data = session['ip_info']
+        # if 'X-Forwarded-For' in request.headers:
+        #     user_ip = str(request.headers['X-Forwarded-For'])
+        # else:
+        #     user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
 
-        # get location information based off of IP address
-        url = 'http://ip-api.com/json/' + user_ip
-        response = requests.get(url)
-        json_response = response.json()
+        # # get location information based off of IP address
+        # url = 'http://ip-api.com/json/' + user_ip
+        # response = requests.get(url)
+        # json_response = response.json()
         return redirect(
-            url_for('weather', city=json_response['city'], state=json_response['regionName'])
+            url_for('weather', city=data['city'], state=data['state'])
         )
     else:
         data = get_ip_info()
