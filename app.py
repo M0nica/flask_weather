@@ -104,7 +104,7 @@ def error_page(error):
 # private non-route methods
 def get_ip_info():
     ip = requests.get('http://ip.42.pl/raw').text
-    r = requests.get('http://ip-api.com/json/#' + ip)
+    r = requests.get('http://ip-api.com/json/' + ip)
     js = r.json()
 
     return {
