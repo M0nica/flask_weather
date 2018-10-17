@@ -105,7 +105,7 @@ def error_page(error):
 def get_ip_info():
 
     if 'X-Forwarded-For' in request.headers:
-         user_ip = str(request.headers['X-Forwarded-For'])
+        user_ip = str(request.headers['X-Forwarded-For'])
     else:
         user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
     
