@@ -12,15 +12,6 @@ app.secret_key = os.environ['secret_key']
 def location():
     if (session and session['ip_info']):
         data = session['ip_info']
-        # if 'X-Forwarded-For' in request.headers:
-        #     user_ip = str(request.headers['X-Forwarded-For'])
-        # else:
-        #     user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
-
-        # # get location information based off of IP address
-        # url = 'http://ip-api.com/json/' + user_ip
-        # response = requests.get(url)
-        # json_response = response.json()
         return redirect(
             url_for('weather', city=data['city'], state=data['state'])
         )
@@ -46,9 +37,9 @@ def celsius():
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
     weather_key = os.environ['weather_key']
-    # degree_sign = u'\N{DEGREE SIGN}'
 
     data = session['ip_info']
+    
     # request weather info from the weather API
     # format for weather api request =
     # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
@@ -109,23 +100,16 @@ def get_ip_info():
     else:
         user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
 
-    print("user ip is " + user_ip)
 
+    # do not use local host ip address as the user_ip
     if user_ip == '127.0.0.1':
         user_ip = requests.get('http://ip.42.pl/raw').text
 
-    print("user ip is " + user_ip)
+ 
     # get location information based off of IP address
     url = 'http://ip-api.com/json/' + user_ip
     response = requests.get(url)
     js = response.json()
-
-
-    # ip = requests.get('http://ip.42.pl/raw').text
-    # r = requests.get('http://ip-api.com/json/' + ip)
-    # js = r.json()
-
-    print(js)
 
     return {
         'success': js['status'] == 'success',
