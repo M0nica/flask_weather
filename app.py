@@ -103,14 +103,26 @@ def error_page(error):
 
 # private non-route methods
 def get_ip_info():
-    ip = requests.get('http://ip.42.pl/raw').text
-    r = requests.get('http://ip-api.com/json/' + ip)
-    js = r.json()
+
+    if 'X-Forwarded-For' in request.headers:
+         user_ip = str(request.headers['X-Forwarded-For'])
+    else:
+        user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+    
+    # get location information based off of IP address
+    url = 'http://ip-api.com/json/' + user_ip
+    response = requests.get(url)
+    js = response.json()
+
+
+    # ip = requests.get('http://ip.42.pl/raw').text
+    # r = requests.get('http://ip-api.com/json/' + ip)
+    # js = r.json()
 
     return {
         'success': js['status'] == 'success',
         'city': js['city'],
-        'state': js['regionName'],
+        'state': js['state'],
         'ip_coords': str(js['lat']) + ", " + str(js['lon'])
     }
 
