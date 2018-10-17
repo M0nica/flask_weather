@@ -108,7 +108,13 @@ def get_ip_info():
         user_ip = str(request.headers['X-Forwarded-For'])
     else:
         user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
-    
+
+    print("user ip is " + user_ip)
+
+    if user_ip == '127.0.0.1':
+        user_ip = requests.get('http://ip.42.pl/raw').text
+
+    print("user ip is " + user_ip)
     # get location information based off of IP address
     url = 'http://ip-api.com/json/' + user_ip
     response = requests.get(url)
@@ -119,10 +125,12 @@ def get_ip_info():
     # r = requests.get('http://ip-api.com/json/' + ip)
     # js = r.json()
 
+    print(js)
+
     return {
         'success': js['status'] == 'success',
         'city': js['city'],
-        'state': js['state'],
+        'state': js['regionName'],
         'ip_coords': str(js['lat']) + ", " + str(js['lon'])
     }
 
