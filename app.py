@@ -1,8 +1,9 @@
 import requests
-from flask import Flask, session, render_template, redirect, url_for
+from flask import Flask, session, render_template, redirect, url_for, request
 import os
 
 app = Flask(__name__)
+
 
 app.secret_key = os.environ['secret_key']
 
@@ -11,6 +12,15 @@ app.secret_key = os.environ['secret_key']
 def location():
     if (session and session['ip_info']):
         data = session['ip_info']
+        # if 'X-Forwarded-For' in request.headers:
+        #     user_ip = str(request.headers['X-Forwarded-For'])
+        # else:
+        #     user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+
+        # # get location information based off of IP address
+        # url = 'http://ip-api.com/json/' + user_ip
+        # response = requests.get(url)
+        # json_response = response.json()
         return redirect(
             url_for('weather', city=data['city'], state=data['state'])
         )
