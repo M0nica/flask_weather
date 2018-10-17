@@ -6,6 +6,7 @@ body {
   width: 50%;
   text-align: center;
   padding-top: 5em;
+  background-image: url("paper.gif");
 }
 
 span.weather-icon {
