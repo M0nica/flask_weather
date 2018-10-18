@@ -34,3 +34,9 @@ Right now it is 41° and there is a 0% chance of rain.
 
 ### Today's Weather Forecast for City, State
 Right now it is X° and there is a Y% chance of rain.
+
+### Credits
+Sunny Background Image - Photo by Jordan Wozniak on Unsplash
+Cloudy Background Image - Photo by Iswanto Arif on Unsplash
+Thunderous Background Image - Photo by Jeremy Thomas on Unsplash
+Rainy Background Image - Photo by Peter Oslanec on Unsplash

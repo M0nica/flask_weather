@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect, url_for, request
 from socket import gethostname, gethostbyname
 # from urllib2 import urlopen
@@ -60,20 +61,25 @@ def weather(ip_coordinates, city, state):
 
     if RAIN_WARNING == 0:
         rain_commentary = "there is a no chance of rain! It's a sunny day"
+        background_image = "sunny.jpg"
     elif 0 < RAIN_WARNING <= .5:
         rain_commentary = "there is a slight chance of rain. You might want to grab an umbrella ☔"
+        background_image = "cloudy.jpg"
     elif  .5 < RAIN_WARNING <.75:
         rain_commentary = "there is a high chance of rain. Grab an umbrella on your way out! ☔"
+        background_image = "thunder.jpg"
     elif  RAIN_WARNING == 1:
         rain_commentary = "it is raining right now!"
+        background_image = "rainy.jpg"
     else:
         rain_commentary = "it is definitely going to rain today! GRAB YOUR UMBRELLA. ☔"
+        background_image = "rainys.jpg"
     # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
     #print out a statement with the current weather info + location that was used/detected
     #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
-    weather_info = {'temperature' : temperature, 'rain' : rain_commentary}
+    weather_info = {'temperature' : temperature, 'rain' : rain_commentary, 'image' : background_image}
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 

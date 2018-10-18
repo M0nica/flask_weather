@@ -1,3 +1,23 @@
+html.sunny {
+    background-image: url('../images/sunny.jpg');
+    background-size: cover;
+}
+
+html.cloudy {
+    background-image: url('../images/cloudy.jpg');
+    background-size: cover;
+}
+
+html.thunder {
+    background-image: url('../images/thunder.jpg');
+    background-size: cover;
+}
+
+html.rainy {
+    background-image: url('../images/rainy.jpg');
+    background-size: cover;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #e7ecec;
@@ -6,6 +26,7 @@ body {
   width: 50%;
   text-align: center;
   padding-top: 5em;
+  background-color: transparent;
 }
 
 span.weather-icon {
