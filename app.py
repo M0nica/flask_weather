@@ -36,27 +36,7 @@ def celsius():
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
-    weather_key = os.environ['weather_key']
-
-    data = session['ip_info']
-    
-    # request weather info from the weather API
-    # format for weather api request =
-    # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
-    response = requests.get(
-        'https://api.forecast.io/forecast/%s/%s%s' % (
-            weather_key, data['ip_coords'], celsius()
-        )
-    )
-    data = response.json()
-
-    # data['hourly'] contains hourly data with the time formatted as Epoch
-    # Unix Time - should look into how to display hourly data in weather.html
-    # data['hourly']
-
-    weather_icon = str(data['currently']['icon'])
-    temperature = str(int(data['currently']['temperature']))
-    RAIN_WARNING = data['daily']['data'][0]['precipProbability']
+    weather_icon, temperature, RAIN_WARNING = get_weather_data(city, state)
 
     if RAIN_WARNING == 0:
         rain_commentary = "there is a no chance of rain! It's a sunny day"
@@ -118,6 +98,30 @@ def get_ip_info():
         'ip_coords': str(js['lat']) + ", " + str(js['lon'])
     }
 
+def get_weather_data(city, state):
+    weather_key = os.environ['weather_key']
+
+    data = session['ip_info']
+    
+    # request weather info from the weather API
+    # format for weather api request =
+    # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
+    response = requests.get(
+        'https://api.forecast.io/forecast/%s/%s%s' % (
+            weather_key, data['ip_coords'], celsius()
+        )
+    )
+    data = response.json()
+
+    # data['hourly'] contains hourly data with the time formatted as Epoch
+    # Unix Time - should look into how to display hourly data in weather.html
+    # data['hourly']
+
+    weather_icon = str(data['currently']['icon'])
+    temperature = str(int(data['currently']['temperature']))
+    RAIN_WARNING = data['daily']['data'][0]['precipProbability']
+
+    return weather_icon, temperature, RAIN_WARNING
 
 if __name__ == '__main__':
     app.run()
