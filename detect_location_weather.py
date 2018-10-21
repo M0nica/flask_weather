@@ -15,16 +15,18 @@ app = Flask(__name__)
 def location():
 
     # get the remote address of the client
-    user_ip = request.environ['REMOTE_ADDR']
-    print(user_ip)
+    if 'X-Forwarded-For' in request.headers:
+        user_ip = request.headers['X-Forwarded-For']
+    else:
+        user_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
     # get location information based off of IP address
-    url = 'http://ip-api.com/json/#'+user_ip
+    url = 'http://ip-api.com/json/' + user_ip
     r = requests.get(url)
     js = r.json()
     status = js['status']
 
-    # if call is successful 
+    # if call is successful
     if status == 'success':
         try:
             city = js['city']
