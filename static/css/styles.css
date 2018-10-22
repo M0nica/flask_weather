@@ -1,11 +1,15 @@
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #7e9cb44f;
-  color: #01082f;
-  margin: auto;
-  width: 50%;
-  text-align: center;
-  padding-top: 5em;
+    font-family: 'Roboto', sans-serif;
+    background-color: #7e9cb44f;
+    color: #01082f;
+}
+
+.nav {
+    font-family: 'Roboto', sans-serif;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    background-color: transparent;
 }
 
 span.weather-icon {
@@ -16,12 +20,17 @@ span.weather-degrees {
     font-size: 5em;
 }
 
+#weather-card-layout {
+    margin: auto;
+    width: 50%;
+}
 
 #weather-card {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     background-color: #7e9db4;
+    text-align: center;
 }
 
 #weather-card h2 {
@@ -41,4 +50,8 @@ span.weather-degrees {
 
 .weather-container p {
   padding: 2em;
+}
+
+footer {
+    text-align: center;
 }
