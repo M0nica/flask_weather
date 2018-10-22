@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-
+requests.get(URL,headers={'Authorisation','GoogleLogin auth=%s' % authorisation_token})
 app.secret_key = os.environ['secret_key']
 
 
