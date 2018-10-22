@@ -19,6 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/styles.css') }}">
@@ -119,6 +120,10 @@
     wi-forecast-io-tornado: tornado -->
 
             </p>
+            <button class="btn btn-primary btn-lg" onclick="toggleWeather('{{ location.city }}', '{{ location.state }}', '{{ weather_info.unit }}')">
+                See it in {% if weather_info.unit == True %} &#8457; {% else %} &#8451; {% endif %}
+            </button>
+            <div></div>
         </div>
     </div>
     <br>

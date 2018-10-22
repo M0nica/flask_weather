@@ -29,14 +29,26 @@ def location():
 def celsius():
     if hasattr(os.environ, "celsius"):
         if os.environ['celsius']:
-            return "?units=si"
+            return True
+    return False
 
+
+def get_unit(is_celsius=False):
+    if is_celsius:
+        return "?units=si"
     return ""
 
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
     weather_key = os.environ['weather_key']
+    try:
+        to_toggle = bool(int((request.args.get("toToggle", 0))))
+    except ValueError:
+        to_toggle = False
+
+    is_celsius = not celsius() if to_toggle else celsius()
+    unit = get_unit(is_celsius)
 
     data = session['ip_info']
     
@@ -45,7 +57,7 @@ def weather(city, state):
     # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get(
         'https://api.forecast.io/forecast/%s/%s%s' % (
-            weather_key, data['ip_coords'], celsius()
+            weather_key, data['ip_coords'], unit
         )
     )
     data = response.json()
@@ -79,7 +91,7 @@ def weather(city, state):
     # + degree_sign + " and there is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
 
-    weather_info = {'temperature': temperature, 'rain': rain_commentary}
+    weather_info = {'temperature': temperature, 'rain': rain_commentary, 'unit': is_celsius}
     return render_template(
         'weather.html',
         location=location,
