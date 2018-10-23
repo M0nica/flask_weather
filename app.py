@@ -38,14 +38,21 @@ def celsius():
 def weather(city, state):
     weather_key = os.environ['weather_key']
 
-    data = session['ip_info']
+    if 'ip_info' in session:
+        data = session['ip_info']
+        geo_info = data['ip_coords']
+    else:
+        geo_info = get_geo_info(city, state)
+
+    if geo_info is None:
+        return error_page('GEO info Missing!')
     
     # request weather info from the weather API
     # format for weather api request =
     # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get(
         'https://api.forecast.io/forecast/%s/%s%s' % (
-            weather_key, data['ip_coords'], celsius()
+            weather_key, geo_info, celsius()
         )
     )
     data = response.json()
@@ -124,8 +131,25 @@ def get_ip_info():
         'success': js['status'] == 'success',
         'city': js['city'],
         'state': js['regionName'],
-        'ip_coords': str(js['lat']) + ", " + str(js['lon'])
+        'ip_coords': get_geo_str(js['lat'], js['lon'])
     }
+
+
+def get_geo_info(city, state):
+    # get location information based off of city/state
+    url = 'http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address=%s,%s' % (city, state)
+    response = requests.get(url)
+    js = response.json()
+
+    if js['status'] == 'OK':
+        lat = js['results'][0]['geometry']['location']['lat']
+        lon = js['results'][0]['geometry']['location']['lng']
+        return get_geo_str(lat, lon)
+    else:
+        return None;
+
+def get_geo_str(lat, lon):
+    return str(lat) + "," + str(lon)
 
 def weather_commentary(temperature):
     temperature = int(temperature)
@@ -153,6 +177,7 @@ def weather_commentary(temperature):
         return temperature_level[5]
     elif temperature <= 24:
         return temperature_level[6]
+
 
 if __name__ == '__main__':
     app.run()
