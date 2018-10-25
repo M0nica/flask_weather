@@ -65,6 +65,7 @@ def weather(city, state):
     temperature = int(data['currently']['temperature'])
     RAIN_WARNING = data['daily']['data'][0]['precipProbability']
     rain_commentary = ""
+    commentary = ""
 
     if temperature <= 50:
         commentary = "It's really cold outside today. You might need that scarf."
@@ -100,7 +101,7 @@ def weather(city, state):
 
     temperature = str(temperature)
     if not rain_commentary:
-        weather_info = {'temperature': temperature, 'commentary': rain_commentary}
+        weather_info = {'temperature': temperature, 'commentary': commentary}
     else:
         weather_info = {'temperature': temperature, 'commentary': rain_commentary}
     
