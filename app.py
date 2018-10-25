@@ -100,7 +100,7 @@ def weather(city, state):
 
     temperature = str(temperature)
     if not rain_commentary:
-        weather_info = {'temperature': temperature, 'commentary': commentary}
+        weather_info = {'temperature': temperature, 'commentary': rain_commentary}
     else:
         weather_info = {'temperature': temperature, 'commentary': rain_commentary}
     
