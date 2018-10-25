@@ -1,8 +1,9 @@
 import requests
-from flask import Flask, session, render_template, redirect, url_for
+from flask import Flask, session, render_template, redirect, url_for, request
 import os
 
 app = Flask(__name__)
+
 
 app.secret_key = os.environ['secret_key']
 
@@ -36,15 +37,22 @@ def celsius():
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
     weather_key = os.environ['weather_key']
-    # degree_sign = u'\N{DEGREE SIGN}'
 
-    data = session['ip_info']
+    if 'ip_info' in session:
+        data = session['ip_info']
+        geo_info = data['ip_coords']
+    else:
+        geo_info = get_geo_info(city, state)
+
+    if geo_info is None:
+        return error_page('GEO info Missing!')
+    
     # request weather info from the weather API
     # format for weather api request =
     # https://api.darksky.net/forecast/[key]/[latitude],[longitude]
     response = requests.get(
         'https://api.forecast.io/forecast/%s/%s%s' % (
-            weather_key, data['ip_coords'], celsius()
+            weather_key, geo_info, celsius()
         )
     )
     data = response.json()
@@ -80,6 +88,8 @@ def weather(city, state):
     else:
         rain_commentary = "it is definitely going to rain today! " \
                           "GRAB YOUR UMBRELLA. ☔"
+    
+
     # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
     # print out a statement with the current weather info + location that was
@@ -90,9 +100,9 @@ def weather(city, state):
 
     temperature = str(temperature)
     if not rain_commentary:
-        weather_info = {'temperature': temperature, 'commentary': rain_commentary}
-    else:
         weather_info = {'temperature': temperature, 'commentary': commentary}
+    else:
+        weather_info = {'temperature': temperature, 'commentary': rain_commentary}
     
     return render_template(
         'weather.html',
@@ -108,16 +118,73 @@ def error_page(error):
 
 # private non-route methods
 def get_ip_info():
-    ip = requests.get('http://ip.42.pl/raw').text
-    r = requests.get('http://ip-api.com/json/#' + ip)
-    js = r.json()
+
+    if 'X-Forwarded-For' in request.headers:
+        user_ip = str(request.headers['X-Forwarded-For'])
+    else:
+        user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+
+
+    # do not use local host ip address as the user_ip
+    if user_ip == '127.0.0.1':
+        user_ip = requests.get('http://ip.42.pl/raw').text
+
+ 
+    # get location information based off of IP address
+    url = 'http://ip-api.com/json/' + user_ip
+    response = requests.get(url)
+    js = response.json()
 
     return {
         'success': js['status'] == 'success',
         'city': js['city'],
         'state': js['regionName'],
-        'ip_coords': str(js['lat']) + ", " + str(js['lon'])
+        'ip_coords': get_geo_str(js['lat'], js['lon'])
     }
+
+
+def get_geo_info(city, state):
+    # get location information based off of city/state
+    url = 'http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address=%s,%s' % (city, state)
+    response = requests.get(url)
+    js = response.json()
+
+    if js['status'] == 'OK':
+        lat = js['results'][0]['geometry']['location']['lat']
+        lon = js['results'][0]['geometry']['location']['lng']
+        return get_geo_str(lat, lon)
+    else:
+        return None;
+
+def get_geo_str(lat, lon):
+    return str(lat) + "," + str(lon)
+
+def weather_commentary(temperature):
+    temperature = int(temperature)
+    temperature_level = {
+                0:  "it's scorching hot. Stay cool!",
+                1:  "it's hot and sunny. Don't forget that sunscreen!",
+                2:  "it's nice and warm today. Time to flex those flip-flops",
+                3:  "a cup of hot cappucino would be nice on this cool weather",
+                4:  "it's gonna be cold today. Make sure you keep yourself warm!",
+                5:  "winter is here! Brrrrrrr",
+                6:  "it's Freezing Cold."
+    }
+
+    if temperature >= 95:
+        return temperature_level[0]
+    elif 80 <= temperature <= 94:
+        return temperature_level[1]
+    elif 69 <= temperature <= 79:
+        return temperature_level[2]
+    elif 59 <= temperature <= 68:
+        return temperature_level[3]
+    elif 40 <= temperature <= 57:
+        return temperature_level[4]
+    elif 25 <= temperature <= 39:
+        return temperature_level[5]
+    elif temperature <= 24:
+        return temperature_level[6]
 
 
 if __name__ == '__main__':
