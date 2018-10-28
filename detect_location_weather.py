@@ -1,17 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, request
-from socket import gethostname, gethostbyname
+# coding=utf-8
+
 # from urllib2 import urlopen
-from geoip import geolite2
-from geoip import open_database
-import urllib.request as ur
-import socket
 import requests
-import config
+from flask import Flask, render_template, redirect, url_for, request
 
 app = Flask(__name__)
 
-@app.route('/')
 
+@app.route('/')
 def location():
 
     # get the remote address of the client
@@ -33,17 +29,15 @@ def location():
             state = js['regionName']
             ip_coordinates = str(js['lat']) + "," + str(js['lon'])
 
-            #pass the coordinates and city name to the route that gets weather info
+            # pass the coordinates and city name to the route that gets weather info
             return redirect(url_for('weather', ip_coordinates=ip_coordinates, city=city, state=state))
         except KeyError:
             return redirect(url_for('error_page'))
     else:
         return redirect(url_for('error_page'))
-    # return "hah"
 
 
 @app.route('/weather/<ip_coordinates>/<city>/<state>')
-
 def weather(ip_coordinates, city, state):
     weather_key = config.weather_key
     degree_sign= u'\N{DEGREE SIGN}'
@@ -70,16 +64,18 @@ def weather(ip_coordinates, city, state):
         rain_commentary = "it is definitely going to rain today! GRAB YOUR UMBRELLA."
     # str(data['daily']['data'][0]['precipProbability']) + "% chance of rain."
 
-    #print out a statement with the current weather info + location that was used/detected
-    #return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
+    # print out a statement with the current weather info + location that was used/detected
+    # return("Right now in "+ city + ", " + state + " it is " + temperature +  degree_sign + " and there  is a " + RAIN_WARNING)
     location = {'city': city, 'state': state}
     weather_info = {'temperature' : temperature, 'rain' : rain_commentary}
     return render_template('weather.html',
                            location=location, weather_info=weather_info, weather_icon=weather_icon)
 
+
 @app.route('/404')
 def error_page():
     return render_template('404.html')
+
 
 if __name__ == '__main__':
     app.run()

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import requests
 from flask import Flask, session, render_template, redirect, url_for, request
 import os
@@ -116,12 +118,10 @@ def get_ip_info():
     else:
         user_ip = str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
 
-
     # do not use local host ip address as the user_ip
     if user_ip == '127.0.0.1':
         user_ip = requests.get('http://ip.42.pl/raw').text
 
- 
     # get location information based off of IP address
     url = 'http://ip-api.com/json/' + user_ip
     response = requests.get(url)
@@ -146,7 +146,7 @@ def get_geo_info(city, state):
         lon = js['results'][0]['geometry']['location']['lng']
         return get_geo_str(lat, lon)
     else:
-        return None;
+        return None
 
 def get_geo_str(lat, lon):
     return str(lat) + "," + str(lon)
