@@ -5,8 +5,7 @@ import os
 app = Flask(__name__)
 
 
-#app.secret_key = os.environ['secret_key']
-app.secret_key = "M4n43lf0v41!"
+app.secret_key = os.environ['secret_key']
 
 
 @app.route('/')
@@ -50,8 +49,7 @@ def celsius():
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
-    #weather_key = os.environ['weather_key']
-    weather_key = "36c440ef6fcd94567b4fc57808e504d3"
+    weather_key = os.environ['weather_key']
 
     if 'ip_info' in session:
         data = session['ip_info']
