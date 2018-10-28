@@ -5,7 +5,8 @@ import os
 app = Flask(__name__)
 
 
-app.secret_key = os.environ['secret_key']
+#app.secret_key = os.environ['secret_key']
+app.secret_key = "M4n43lf0v41!"
 
 
 @app.route('/')
@@ -26,6 +27,19 @@ def location():
             return redirect(url_for('error_page'))
 
 
+@app.route('/change')
+def change():
+    return render_template('change.html')
+
+
+@app.route('/changeLocation', methods=['POST', ])
+def change_location():
+    city = request.form['city']
+    state = request.form['state']
+    session.pop('ip_info')
+    return redirect(url_for('weather', city=city, state=state))
+
+
 def celsius():
     if hasattr(os.environ, "celsius"):
         if os.environ['celsius']:
@@ -36,7 +50,8 @@ def celsius():
 
 @app.route('/weather/<city>/<state>')
 def weather(city, state):
-    weather_key = os.environ['weather_key']
+    #weather_key = os.environ['weather_key']
+    weather_key = "36c440ef6fcd94567b4fc57808e504d3"
 
     if 'ip_info' in session:
         data = session['ip_info']
@@ -180,4 +195,4 @@ def weather_commentary(temperature):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
