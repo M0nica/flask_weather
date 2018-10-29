@@ -22,7 +22,7 @@ class FlaskWeatherTestCase(unittest.TestCase):
         request = self.app.get('/doesnotexist')
         self.assertEqual(404, request.status_code)
 
-    @patch('app.get_weather_data', return_value=('partly-cloudy-day', 37, 0))
+    @patch('app.get_weather_data', return_value=('partly-cloudy-day', 37, 0.6))
     def test_correct_weather_is_displayed_partly_cloudy(self, get_weather_data):
         request = self.app.get('/weather/Stockholm/Stockholm')
         self.assertEqual(200, request.status_code)
@@ -33,7 +33,7 @@ class FlaskWeatherTestCase(unittest.TestCase):
         self.assertIn('37', weatherText)
         weatherDetailedText = soup.select('.weather-container > p')[0].getText()
         self.assertIn('Right now it is 37', weatherDetailedText)
-        self.assertIn('there is a no chance of rain! It\'s a sunny day', weatherDetailedText)
+        self.assertIn('and there is a high chance of rain. Grab an umbrella on your way out!', weatherDetailedText)
         weatherIcon = soup.find('i', {'class': 'wi-forecast-io-partly-cloudy-day'})
         self.assertTrue(weatherIcon)
 
