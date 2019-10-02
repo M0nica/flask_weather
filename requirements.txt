@@ -46,7 +46,7 @@ python-geoip==1.2
 python-geoip-geolite2==2015.303
 pyzmq==16.0.2
 qtconsole==4.2.1
-requests==2.13.0
+requests==2.20.0
 Send2Trash==1.5.0
 simplegeneric==0.8.1
 six==1.10.0
