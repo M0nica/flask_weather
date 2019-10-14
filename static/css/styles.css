@@ -1,6 +1,9 @@
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #7e9cb44f;
+  background-color: #bdc3c7;  /* fallback for old browsers */
+  background-color: -webkit-linear-gradient(to top, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+  background-color: linear-gradient(to top, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  /*background-color: #7e9cb44f;*/
   color: #01082f;
   margin: auto;
   width: 50%;
@@ -21,7 +24,10 @@ span.weather-degrees {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    background-color: #7e9db4;
+    background-color: #2C3E50;  /* fallback for old browsers */
+    background-color: -webkit-linear-gradient(to top, #FD746C, #2C3E50);  /* Chrome 10-25, Safari 5.1-6 */
+    background-color: linear-gradient(to top, #FD746C, #2C3E50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /*background-color: #7e9db4;*/
 }
 
 #weather-card h2 {
@@ -35,7 +41,10 @@ span.weather-degrees {
 
 /* Add some padding inside the card container */
 .weather-container {
-    background-color: #f8f3f3;
+    /*background-color: #f8f3f3;*/
+    background-color: #00416A;  /* fallback for old browsers */
+    background-color: -webkit-linear-gradient(to top, #E4E5E6, #00416A);  /* Chrome 10-25, Safari 5.1-6 */
+    background-color: linear-gradient(to top, #E4E5E6, #00416A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     padding: 2px 16px;
 }
 
