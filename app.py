@@ -25,6 +25,10 @@ def location():
         else:
             return redirect(url_for('error_page'))
 
+@app.route('/update-location')
+def delete_visits():
+    session.pop('ip_info', None) # delete current location cookie
+    return redirect(url_for('location'))
 
 def celsius():
     if hasattr(os.environ, "celsius"):
