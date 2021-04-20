@@ -37,7 +37,7 @@ pip-tools==1.8.0
 pluggy==0.7.1
 prompt-toolkit==1.0.13
 ptyprocess==0.5.1
-py==1.6.0
+py==1.10.0
 Pygments==2.2.0
 pyparsing==2.1.10
 pytest==3.8.2
