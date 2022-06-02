@@ -11,7 +11,7 @@ entrypoints==0.2.2
 first==2.0.1
 Flask==0.12.3
 gunicorn==19.5.0
-html5lib==0.9999999
+html5lib==0.99999999
 ipykernel==4.5.2
 ipython==5.2.2
 ipython-genutils==0.1.0
