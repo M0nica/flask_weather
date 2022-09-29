@@ -59,4 +59,3 @@ wcwidth==0.1.7
 Werkzeug==0.11.15
 widgetsnbextension==1.2.6
 urllib3==1.19.1
-requests==2.9
